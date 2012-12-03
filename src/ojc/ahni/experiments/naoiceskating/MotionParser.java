@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,25 +39,21 @@ public class MotionParser {
 			motionArray[counter/lengthPitches][counter%lengthPitches] = x ; 
 			counter++ ; 
 		}
-		//Write what was just loaded for debugging purpose
-		writeMotionFile(motionArray, "JustLoaded") ; 
+		
 		return motionArray ; 
 	}
 	
-	public static void writeMotionFile(double[][] motionFile, String nameExtension){ 
+	public static void writeMotionFile(double[][] motionFile, String fileName){ 
 		FileWriter fos;
 		try {
-		
-			String str = "generation" + nameExtension + ".motion";
-			File file = new File(str);
-			file = new File( "generatedmotions" + File.separatorChar+ str);
-			String absolutePathOfSecondFile = file.getAbsolutePath();
-			System.out.println(" The absolute path is " + absolutePathOfSecondFile);
-			file = new File("generatedmotions" + File.separator + ".." + File.separator + str);
-			String absolutePathOfThirdFile = file.getAbsolutePath();
-			System.out.println(" The absolute path is " + absolutePathOfThirdFile); 
-			fos = new FileWriter(absolutePathOfSecondFile, false);
-			BufferedWriter out = new BufferedWriter(fos) ; 
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+			decimalFormatSymbols.setDecimalSeparator( '.' );
+			
+			// Create new file writer.
+			File file = new File( "data/generations" + File.separator+ fileName);			
+			fos = new FileWriter(file, false);
+			BufferedWriter out = new BufferedWriter(fos); 
+			
 			out.write("#WEBOTS_MOTION,V1.0,LHipYawPitch,LHipRoll,LHipPitch,LKneePitch,LAnklePitch,LAnkleRoll,RHipYawPitch,RHipRoll,RHipPitch,RKneePitch,RAnklePitch,RAnkleRoll\n") ;
 			int timestep = 40 ; 
 			for (int x = 0 ; x < motionFile.length; x++){
@@ -68,12 +65,12 @@ public class MotionParser {
 					out.write("00:0" + (int)((x*timestep)/1000) + ":" + (x*timestep)%1000 + ",Pose" + (x+1)) ;
 				}
 				
-				for(int y = 0; y < motionFile[x].length; y++){
-					out.write("," + new DecimalFormat("#.###").format(((motionFile[x][y]*2.0)-1.0))) ;
+				for(int y = 0; y < motionFile[x].length; y++)
+				{
+					out.write("," + new DecimalFormat("#.###", decimalFormatSymbols ).format(((motionFile[x][y]*2.0)-1.0))) ;
 				}
 				out.write("\n") ; 
 			}
-			out.flush() ; 
 			out.close(); 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

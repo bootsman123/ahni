@@ -10,6 +10,13 @@ import ojc.ahni.evaluation.HyperNEATFitnessFunction;
 
 public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 {
+	public static final String WEBOTS_DIRECTORY = String.format( "%s/%s", System.getProperty( "user.dir" ), "webots" );;
+	public static final String WEBOTS_EXECUTABLE = "C:/Programs/Webots/webots.exe";
+	
+	public static final String DATA_DIRECTORY = String.format( "%s/%s", System.getProperty( "user.dir" ), "data" );
+	public static final String DATA_FILE_NAME_ORIGINAL_ACCELEROMETER = "original_accelerometer.csv";
+	public static final String DATA_FILE_PATH_ORIGINAL_ACCELEROMETER = String.format( "%s/%s", DATA_DIRECTORY, DATA_FILE_NAME_ORIGINAL_ACCELEROMETER );
+	
 	/**
 	 * 
 	 */
@@ -24,10 +31,10 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 	@Override
 	protected int evaluate( Chromosome genotype, Activator substrate, int evalThreadIndex )
 	{
-		double[][] stimuli = MotionParser.loadMotionFile( "C:/Users/bootsman/Desktop/webots/naoiceskating/motions/Forwards.motion" );
+		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s/%s", WEBOTS_DIRECTORY, "naoiceskating/motions/Forwards.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
 		
-		MotionParser.writeMotionFile( activation, "12345" );
+		MotionParser.writeMotionFile( activation, "ForwardsEvolved.motion" );
 
 		// Run Webots.
 		Runtime runtime = Runtime.getRuntime() ;
@@ -36,15 +43,15 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 		{
 			// Run simulation
 			System.out.printf( "[Webots]: Running simuation...\n" );
-			
-			Process process = runtime.exec("C:/Programs/Webots/webots.exe \"C:/Users/bootsman/Desktop/webots/naoiceskating/naoiceskating.wbt\"" );
+						
+			Process process = runtime.exec( String.format( "%s %s \"%s/%s\"", WEBOTS_EXECUTABLE, "--mode=run", WEBOTS_DIRECTORY, "naoiceskating/worlds/naoiceskating.wbt" ) );
 			int code = process.waitFor();
 			
-			System.out.printf( "[Webots]: Simulation ended with code %n.\n", code );
+			//System.out.printf( "[Webots]: Simulation ended with code %n.\n", code );
 			
 			// Determine fitness.			
-			Fitnessizer fitnessizer = new Fitnessizer( "C:/Users/bootsman/Desktop/interpol_accelerometer_marlies.csv" );
-			double fitness = fitnessizer.calculate( "C:/Users/bootsman/Desktop/accelerometer.csv" );
+			Fitnessizer fitnessizer = new Fitnessizer( DATA_FILE_PATH_ORIGINAL_ACCELEROMETER );
+			double fitness = fitnessizer.calculate( String.format( "%s/%s", DATA_DIRECTORY, "accelerometer.csv" ) );
 			
 			System.out.printf( "Fitness: %f\n", fitness );
 			
@@ -61,5 +68,4 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 		
 		return this.getMaxFitnessValue();
 	}
-
 }

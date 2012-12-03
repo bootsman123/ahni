@@ -1,0 +1,6 @@
+#VRML_OBJ V6.0
+DEF Nao_Robot Nao_H25_V40 {
+  translation 0 0.307099 0.45
+  controller "NaoIceSkating"
+  footContactMaterial "Nao_Robot"
+}

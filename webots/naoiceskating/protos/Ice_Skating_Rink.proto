@@ -1,0 +1,39 @@
+PROTO Ice_Skating_Rink [
+	field SFVec3f translation 0 0 0
+	field SFRotation rotation 0 1 0 0
+]
+{
+	Solid {
+		translation IS translation
+		rotation IS rotation
+		locked TRUE
+		name "Ice_Skating_Rink"
+		description "The ice skating rink in which Naomi is learning to ice skate."
+		contactMaterial "Ice_Skating_Rink"
+		children [
+			Shape {
+				geometry ElevationGrid {
+					color Color {
+						color [
+							1 1 1
+							1 0 0
+						]
+					}
+					colorPerVertex FALSE
+					xDimension 50
+					xSpacing 0.1
+					zDimension 10
+					zSpacing 0.1
+				}
+			}
+		]
+		boundingObject Transform {
+			translation 0.5 0 0.5
+			children [
+				Plane {
+				}
+			]
+		}
+	}
+}
+
