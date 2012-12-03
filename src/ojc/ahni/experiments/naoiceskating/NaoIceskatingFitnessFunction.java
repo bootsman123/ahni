@@ -1,6 +1,8 @@
 package ojc.ahni.experiments.naoiceskating;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.jgapcustomised.Chromosome;
 
@@ -33,7 +35,7 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 	{
 		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s/%s", WEBOTS_DIRECTORY, "naoiceskating/motions/Forwards.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
-		
+
 		MotionParser.writeMotionFile( activation, "ForwardsEvolved.motion" );
 
 		// Run Webots.
@@ -54,6 +56,8 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 			double fitness = fitnessizer.calculate( String.format( "%s/%s", DATA_DIRECTORY, "accelerometer.csv" ) );
 			
 			System.out.printf( "Fitness: %f\n", fitness );
+			
+			MotionParser.writeMotionFile( activation, String.format( "%f - %d.motion", fitness, System.nanoTime() ) );
 			
 			return (int)fitness;
 		}
