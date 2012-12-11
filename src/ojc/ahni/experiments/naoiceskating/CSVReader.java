@@ -37,7 +37,7 @@ public class CSVReader
 		}
 		
 		// Add all tokens to the list.
-		List<String> values = new ArrayList<>();
+		List<String> values = new ArrayList<String>();
 		StringTokenizer tokenizer = new StringTokenizer( line, this.delimiter );
 		
 		while( tokenizer.hasMoreTokens() )

@@ -20,9 +20,9 @@ public class Fitnessizer
 
 		this.dataReader = new CSVReader( this.dataFilePath, ";" );
 
-		this.lookupValuesX = new HashMap<>();
-		this.lookupValuesY = new HashMap<>();
-		this.lookupValuesZ = new HashMap<>();
+		this.lookupValuesX = new HashMap<Double,Double>();
+		this.lookupValuesY = new HashMap<Double, Double>();
+		this.lookupValuesZ = new HashMap<Double, Double>();
 		
 		// Process values.
 		this.process();
