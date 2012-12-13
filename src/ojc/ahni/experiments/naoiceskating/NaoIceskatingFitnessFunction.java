@@ -38,7 +38,7 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 	@Override
 	protected int evaluate( Chromosome genotype, Activator substrate, int evalThreadIndex )
 	{
-		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s", WEBOTS_DIRECTORY, "naoiceskating/motions/Forwards.motion" ) );
+		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ForwardsEvolved.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
 
 		MotionParser.writeMotionFile( activation, "ForwardsEvolved.motion" );
@@ -51,7 +51,7 @@ public class NaoIceskatingFitnessFunction extends HyperNEATFitnessFunction
 			// Run simulation
 			System.out.printf( "[Webots]: Running simuation...\n" );
 						
-			Process process = runtime.exec( String.format( "%s --mode=fast \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoiceskating/worlds/naoiceskating.wbt" ) );
+			Process process = runtime.exec( String.format( "%s --mode=run \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoiceskating/worlds/naoiceskating.wbt" ) );
 			int code = process.waitFor();
 			
 			//System.out.printf( "[Webots]: Simulation ended with code %n.\n", code );

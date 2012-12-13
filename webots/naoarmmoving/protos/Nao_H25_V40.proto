@@ -1,22 +1,17 @@
-# Nao H25 V3.3 robot
+# Nao H25 V4.0 robot
 # This Nao model includes the "RWristYaw" and "LWristYaw" motors.
 # The "RHand" and "LHand" motors are each modeled as 8 "phalanx" motors: from "RPhalanx1" through "RPhalanx8" and from "LPhalanx1" through "LPhalanx8" respectively.
 # Model designed by Cyberbotics Ltd. according to the online documentation provided by Aldebaran Robotics.
 # Model author: Yvan Bourquin - www.cyberbotics.com
 #
 # Changes:
-#   Jan 19, 2012 - Created from the NaoV3H.proto
-#     -Renamed some devices according to the Aldebaran's HAL
-#     -Rotated the coordinate system to match the coordinates system specified in Aldebaran's specs
-#     -Reviewed the position/rotation of most devices
-#     -Reviewed links length and offsets according to the V33 specs
-#     -Reviewed the masses and CoMs according to the V33 specs
-#     -Slightly modified the upper and lower arms meshes to match the V33 model
+#   Feb 6, 2012 - Created from the Nao_H25_V33.proto
+#     -Adjusted centers of mass according to values returned by Aldebaran's Simulator SDK
 #
-PROTO Nao_H25_V33 [
+PROTO Nao_H25_V40 [
   field SFVec3f translation 0 0.34 0
   field SFRotation rotation 1 0 0 -1.5708
-  field SFColor color 0.8 0.8 0.8
+  field SFColor color 0.94 0.41 0.01
   field SFString controller "naoqisim"
   field SFString controllerArgs "9559"
   field SFBool synchronization FALSE
@@ -43,7 +38,7 @@ PROTO Nao_H25_V33 [
     controllerArgs IS controllerArgs
     synchronization IS synchronization
     contactMaterial IS contactMaterial
-    name "NAO_H25_V33"
+    name "NAO_H25_V40"
     children [
       DEF WAIST_BAND Transform {
         translation -0.003 0 -0.015
@@ -929,7 +924,9 @@ PROTO Nao_H25_V33 [
         channel 2
       }
       DEF ACCELEROMETER Accelerometer {
+		name "Accelerometer"
         translation -0.008 0.00606 0.027
+		rotation 1 0 0 -1.57
         lookupTable [
           -19.62 -19.62 0.01
           19.62 19.62 0.01
@@ -2093,8 +2090,8 @@ PROTO Nao_H25_V33 [
             }
             physics Physics {
               density -1
-              mass 0.52065
-              centerOfMass 0.0012 -0.00084 0.05353
+              mass 0.60533
+              centerOfMass -0.00112 3e-05 0.05258
             }
             maxVelocity 7.19407
             maxForce 5
@@ -2109,8 +2106,8 @@ PROTO Nao_H25_V33 [
         }
         physics Physics {
           density -1
-          mass 0.0593
-          centerOfMass -2e-05 0.00017 -0.02556
+          mass 0.06442
+          centerOfMass -1e-05 0.00014 -0.02742
         }
         maxVelocity 8.26797
         maxForce 4
@@ -3427,8 +3424,8 @@ PROTO Nao_H25_V33 [
                         }
                         physics Physics {
                           density -1
-                          mass 0.16653
-                          centerOfMass 0.0318 -0.00083 0.00477
+                          mass 0.18533
+                          centerOfMass 0.03434 -0.00088 0.00308
                         }
                         maxVelocity 24.6229
                         maxForce 1.5
@@ -3657,8 +3654,8 @@ PROTO Nao_H25_V33 [
                     }
                     physics Physics {
                       density -1
-                      mass 0.07724
-                      centerOfMass 0.02556 -0.00273 0.00096
+                      mass 0.07778
+                      centerOfMass 0.02552 -0.00281 0.0009
                     }
                     maxVelocity 7.19407
                     maxForce 5
@@ -3672,8 +3669,8 @@ PROTO Nao_H25_V33 [
                 }
                 physics Physics {
                   density -1
-                  mass 0.05971
-                  centerOfMass -0.0256 1e-05 -0.00019
+                  mass 0.06483
+                  centerOfMass -0.02744 0 -0.00014
                 }
                 maxVelocity 8.26797
                 maxForce 4
@@ -3695,8 +3692,8 @@ PROTO Nao_H25_V33 [
             }
             physics Physics {
               density -1
-              mass 0.12309
-              centerOfMass 0.01885 -0.00577 0.00065
+              mass 0.15794
+              centerOfMass 0.02429 -0.00952 0.0032
             }
             maxVelocity 7.19407
             maxForce 5
@@ -3711,8 +3708,8 @@ PROTO Nao_H25_V33 [
         }
         physics Physics {
           density -1
-          mass 0.06996
-          centerOfMass -0.00178 0.02496 0.00018
+          mass 0.07504
+          centerOfMass -0.00165 -0.02663 0.00014
         }
         maxVelocity 8.26797
         maxForce 4
@@ -4454,8 +4451,8 @@ PROTO Nao_H25_V33 [
                         boundingObject USE HAND_BO
                         physics Physics {
                           density -1
-                          mass 0.16653
-                          centerOfMass 0.0318 0.00083 0.00477
+                          mass 0.18533
+                          centerOfMass 0.03434 -0.00088 0.00308
                         }
                         maxVelocity 24.6229
                         maxForce 1.5
@@ -4667,8 +4664,8 @@ PROTO Nao_H25_V33 [
                     }
                     physics Physics {
                       density -1
-                      mass 0.07724
-                      centerOfMass 0.02556 0.00273 0.00096
+                      mass 0.07761
+                      centerOfMass 0.02556 0.00281 0.00076
                     }
                     maxVelocity 7.19407
                     maxForce 5
@@ -4680,8 +4677,8 @@ PROTO Nao_H25_V33 [
                 boundingObject USE ELBOW_BO
                 physics Physics {
                   density -1
-                  mass 0.05971
-                  centerOfMass -0.0256 -1e-05 -0.00019
+                  mass 0.06483
+                  centerOfMass -0.02744 0 -0.00014
                 }
                 maxVelocity 8.26797
                 maxForce 4
@@ -4700,8 +4697,8 @@ PROTO Nao_H25_V33 [
             }
             physics Physics {
               density -1
-              mass 0.12309
-              centerOfMass 0.01885 0.00577 0.00065
+              mass 0.15777
+              centerOfMass 0.02455 0.00563 0.0033
             }
             maxVelocity 7.19407
             maxForce 5
@@ -4716,8 +4713,8 @@ PROTO Nao_H25_V33 [
         }
         physics Physics {
           density -1
-          mass 0.06996
-          centerOfMass -0.00178 -0.02496 0.00018
+          mass 0.07504
+          centerOfMass -0.00165 -0.02663 0.00014
         }
         maxVelocity 8.26797
         maxForce 4
@@ -6741,8 +6738,8 @@ PROTO Nao_H25_V33 [
                             }
                             physics Physics {
                               density -1
-                              mass 0.16175
-                              centerOfMass 0.0254 -0.00332 -0.03241
+                              mass 0.16171
+                              centerOfMass 0.0254 -0.00332 -0.03239
                             }
                             maxVelocity 4.16174
                             maxForce 20
@@ -6757,8 +6754,8 @@ PROTO Nao_H25_V33 [
                         }
                         physics Physics {
                           density -1
-                          mass 0.13892
-                          centerOfMass 0.00142 -0.00028 0.00638
+                          mass 0.13415
+                          centerOfMass 0.00045 -0.0003 0.00684
                         }
                         maxVelocity 6.40239
                         maxForce 15
@@ -6779,8 +6776,8 @@ PROTO Nao_H25_V33 [
                     }
                     physics Physics {
                       density -1
-                      mass 0.29159
-                      centerOfMass 0.00422 -0.00252 -0.04868
+                      mass 0.29163
+                      centerOfMass 0.00394 -0.00221 -0.04938
                     }
                     maxVelocity 6.40239
                     maxForce 15
@@ -6801,8 +6798,8 @@ PROTO Nao_H25_V33 [
                 }
                 physics Physics {
                   density -1
-                  mass 0.39798
-                  centerOfMass 0.00131 -0.00201 -0.05386
+                  mass 0.38976
+                  centerOfMass 0.00139 -0.00225 -0.05374
                 }
                 maxVelocity 6.40239
                 maxForce 15
@@ -6822,8 +6819,8 @@ PROTO Nao_H25_V33 [
             }
             physics Physics {
               density -1
-              mass 0.1353
-              centerOfMass -0.01649 -0.00029 -0.00475
+              mass 0.13053
+              centerOfMass -0.01549 -0.00029 -0.00516
             }
             maxVelocity 4.16174
             maxForce 20
@@ -6838,8 +6835,8 @@ PROTO Nao_H25_V33 [
         }
         physics Physics {
           density -1
-          mass 0.07117
-          centerOfMass -0.00766 0.012 0.02717
+          mass 0.07118
+          centerOfMass -0.00766 0.012 0.02716
         }
         maxVelocity 4.16174
         maxForce 20
@@ -8472,8 +8469,8 @@ PROTO Nao_H25_V33 [
                             }
                             physics Physics {
                               density -1
-                              mass 0.16175
-                              centerOfMass 0.0254 0.00332 -0.03241
+                              mass 0.16184
+                              centerOfMass 0.02542 0.0033 -0.03239
                             }
                             maxVelocity 4.16174
                             maxForce 20
@@ -8486,8 +8483,8 @@ PROTO Nao_H25_V33 [
                         boundingObject USE ANKLE_PITCH_BO
                         physics Physics {
                           density -1
-                          mass 0.13892
-                          centerOfMass 0.00142 0.00028 0.00638
+                          mass 0.13416
+                          centerOfMass 0.00045 0.00029 0.00685
                         }
                         maxVelocity 6.40239
                         maxForce 15
@@ -8500,8 +8497,8 @@ PROTO Nao_H25_V33 [
                     boundingObject USE TIBIA_BO
                     physics Physics {
                       density -1
-                      mass 0.29159
-                      centerOfMass 0.00422 0.00252 -0.04868
+                      mass 0.29142
+                      centerOfMass 0.00453 0.00225 -0.04936
                     }
                     maxVelocity 6.40239
                     maxForce 15
@@ -8514,8 +8511,8 @@ PROTO Nao_H25_V33 [
                 boundingObject USE FEMUR_BO
                 physics Physics {
                   density -1
-                  mass 0.39798
-                  centerOfMass 0.00131 0.00201 -0.05386
+                  mass 0.38968
+                  centerOfMass 0.00138 0.00221 -0.05373
                 }
                 maxVelocity 6.40239
                 maxForce 15
@@ -8528,8 +8525,8 @@ PROTO Nao_H25_V33 [
             boundingObject USE HIP_ROLL_BO
             physics Physics {
               density -1
-              mass 0.1353
-              centerOfMass -0.01649 0.00029 -0.00475
+              mass 0.13053
+              centerOfMass -0.01549 0.00029 -0.00515
             }
             maxVelocity 4.16174
             maxForce 20
@@ -8544,8 +8541,8 @@ PROTO Nao_H25_V33 [
         }
         physics Physics {
           density -1
-          mass 0.07117
-          centerOfMass -0.00766 -0.012 0.02717
+          mass 0.06981
+          centerOfMass -0.00781 -0.01114 0.02661
         }
         maxVelocity 4.16174
         maxForce 20
@@ -8580,8 +8577,8 @@ PROTO Nao_H25_V33 [
     }
     physics Physics {
       density -1
-      mass 1.03948
-      centerOfMass -0.00415 7e-05 0.04258
+      mass 1.04956
+      centerOfMass -0.00413 9e-05 0.04342
     }
   }
 }

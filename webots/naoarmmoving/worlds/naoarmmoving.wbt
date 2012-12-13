@@ -1,0 +1,39 @@
+#VRML_SIM V6.0 utf8
+DEF WorldInfo WorldInfo {
+  info [
+    "Description"
+    "Author: first name last name <e-mail>"
+    "Date: DD MMM YYYY"
+  ]
+  contactProperties [
+    ContactProperties {
+      material1 "Ice_Skating_Rink"
+      material2 "Nao_Robot"
+      coulombFriction 0.4
+      forceDependentSlip 0.25
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.256288 0.931293 0.258863 4.49069
+  position -2.6004 2 -0.221194
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+PointLight {
+  location 2 3 0
+}
+DEF Ice_Skating_Rink Ice_Skating_Rink {
+}
+Supervisor {
+  name "NaoArmMovingSupervisor"
+  controller "NaoArmMovingSupervisor"
+}
+DEF Nao_Robot Nao_H25_V40 {
+  translation 0 0.34 0.45
+  controller "NaoArmMoving"
+  footContactMaterial "Nao_Robot"
+}
