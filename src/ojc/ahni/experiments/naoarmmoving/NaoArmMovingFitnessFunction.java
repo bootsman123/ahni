@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import ojc.ahni.evaluation.HyperNEATFitnessFunction;
+import ojc.ahni.nn.GridNet;
+
 import org.jgapcustomised.Chromosome;
 
 import com.anji.integration.Activator;
-
-import ojc.ahni.evaluation.HyperNEATFitnessFunction;
 
 public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 {
@@ -38,6 +39,49 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 	@Override
 	protected int evaluate( Chromosome genotype, Activator substrate, int evalThreadIndex )
 	{
+		GridNet net = (GridNet) substrate ;
+		
+		int width = 12 ; 
+		int height = 1; 
+		double[][] stimuli = new double[height][width];
+		double[][] targets = MotionParser.loadMotionFile(String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "Forwards.motion" ) );
+		/*
+		System.out.println("Targets:");
+		for (double[] dd: targets){
+			for(double d: dd){
+				
+				System.out.print(d + " ");
+				
+			}
+			System.out.println();
+		}*/
+	
+		System.out.println(targets.length + "  "  + targets[0].length);
+		for(int x = 0 ; x < height; x++){
+			for(int y = 0; y < width; y++){
+				stimuli[x][y] = y;
+			}
+		}
+		double[][] gridnetActivation = net.nextSequence(stimuli);
+		
+		double totalfitness = 0.0 ;
+		//for (double[][] gridnetActivation2 : gridnetActivation){
+		int xcor = 0;
+		
+		for (double[] dd: gridnetActivation){
+			int ycor = 0 ;
+			for(double d: dd){
+				totalfitness += Math.abs(targets[xcor][ycor]-gridnetActivation[xcor][ycor]);
+				System.out.print(gridnetActivation[xcor][ycor] + "  ");
+				//totalfitness += d;
+				ycor++;
+			}
+			xcor++;
+			System.out.println();
+		}
+		//}
+		
+		/*
 		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ForwardsEvolved.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
 
@@ -77,7 +121,8 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 		{
 			e.printStackTrace();
 		}
-		
-		return this.getMaxFitnessValue();
+		*/
+		return (int) totalfitness;
+//		return this.getMaxFitnessValue();
 	}
 }
