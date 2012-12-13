@@ -44,7 +44,18 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 		int width = 12 ; 
 		int height = 1; 
 		double[][] stimuli = new double[height][width];
-		double[][] targets = MotionParser.loadMotionFile(String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ForwardsEvolved.motion" ) );
+		double[][] targets = MotionParser.loadMotionFile(String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "Forwards.motion" ) );
+		/*
+		System.out.println("Targets:");
+		for (double[] dd: targets){
+			for(double d: dd){
+				
+				System.out.print(d + " ");
+				
+			}
+			System.out.println();
+		}*/
+	
 		System.out.println(targets.length + "  "  + targets[0].length);
 		for(int x = 0 ; x < height; x++){
 			for(int y = 0; y < width; y++){
@@ -61,9 +72,11 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 			int ycor = 0 ;
 			for(double d: dd){
 				totalfitness += Math.abs(targets[xcor][ycor]-gridnetActivation[xcor][ycor]);
-				System.out.print(d + " ");
-				totalfitness += d;
+				System.out.print(gridnetActivation[xcor][ycor] + "  ");
+				//totalfitness += d;
+				ycor++;
 			}
+			xcor++;
 			System.out.println();
 		}
 		//}
