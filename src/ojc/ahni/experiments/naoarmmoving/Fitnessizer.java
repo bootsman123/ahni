@@ -1,4 +1,4 @@
-package ojc.ahni.experiments.naoiceskating;
+package ojc.ahni.experiments.naoarmmoving;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

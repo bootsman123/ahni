@@ -1,4 +1,4 @@
-package ojc.ahni.experiments.naoiceskating;
+package ojc.ahni.experiments.nao;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
