@@ -566,20 +566,16 @@ public class HyperNEATEvolver implements Configurable, GeneticEventListener {
 	 */ 
 	@Override
 	public void geneticEventFired(GeneticEvent event) {
-		switch (event.getEventName()) {
-		case GeneticEvent.GENOTYPE_START_EVALUATION_EVENT:
+		String s = event.getEventName();
+		if (s == GeneticEvent.GENOTYPE_START_EVALUATION_EVENT) {
 			fireEvent(new AHNIEvent(AHNIEvent.Type.EVALUATION_START, this, this));
-			break;
-		case GeneticEvent.GENOTYPE_EVALUATED_EVENT:
+		} else if (s == GeneticEvent.GENOTYPE_EVALUATED_EVENT) {
 			fireEvent(new AHNIEvent(AHNIEvent.Type.EVALUATION_END, this, this));
-			break;
-		case GeneticEvent.GENOTYPE_START_GENETIC_OPERATORS_EVENT:
+		} else if (s == GeneticEvent.GENOTYPE_START_GENETIC_OPERATORS_EVENT) {
 			fireEvent(new AHNIEvent(AHNIEvent.Type.REGENERATE_POPULATION_START, this, this));
-			break;
-		case GeneticEvent.GENOTYPE_FINISH_GENETIC_OPERATORS_EVENT:
+		} else if (s == GeneticEvent.GENOTYPE_FINISH_GENETIC_OPERATORS_EVENT) {
 			fireEvent(new AHNIEvent(AHNIEvent.Type.REGENERATE_POPULATION_END, this, this));
-			break;
-		}	
+		}
 	}
 	
 	/**
