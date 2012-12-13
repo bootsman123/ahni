@@ -1,45 +1,44 @@
-#VRML_SIM V6.0 utf8
-DEF WorldInfo WorldInfo {
-  info [
-    "Description"
-    "Author: first name last name <e-mail>"
-    "Date: DD MMM YYYY"
-  ]
-  contactProperties [
-    ContactProperties {
-      material1 "Ice_Skating_Rink"
-      material2 "Nao_Robot"
-      coulombFriction 0.4
-      forceDependentSlip 0.25
-    }
-  ]
-}
-Viewpoint {
-  orientation 0.256288 0.931293 0.258863 4.49069
-  position -2.6004 2 -0.221194
-}
-Background {
-  skyColor [
-    0.4 0.7 1
-  ]
-}
-PointLight {
-  location 2 3 0
-}
-DEF Ice_Skating_Rink Ice_Skating_Rink {
-}
-Supervisor {
-  name "NaoArmMovingSupervisor"
-  controller "NaoArmMovingSupervisor"
-}
-DEF Nao_Robot Robot {
-    translation 0 0.34 0.45
-    rotation 1 0 0 -1.5708
-    controller "NaoArmMoving"
-    controllerArgs "9559"
-    synchronization FALSE
-    contactMaterial "default"
-    name "Nao_Robot"
+# Nao H25 V4.0 robot
+# This Nao model includes the "RWristYaw" and "LWristYaw" motors.
+# The "RHand" and "LHand" motors are each modeled as 8 "phalanx" motors: from "RPhalanx1" through "RPhalanx8" and from "LPhalanx1" through "LPhalanx8" respectively.
+# Model designed by Cyberbotics Ltd. according to the online documentation provided by Aldebaran Robotics.
+# Model author: Yvan Bourquin - www.cyberbotics.com
+#
+# Changes:
+#   Feb 6, 2012 - Created from the Nao_H25_V33.proto
+#     -Adjusted centers of mass according to values returned by Aldebaran's Simulator SDK
+#
+PROTO Nao_H25_V40 [
+  field SFVec3f translation 0 0.34 0
+  field SFRotation rotation 1 0 0 -1.5708
+  field SFColor color 0.94 0.41 0.01
+  field SFString controller "naoqisim"
+  field SFString controllerArgs "9559"
+  field SFBool synchronization FALSE
+  field SFFloat gpsResolution 0.0
+  field SFFloat cameraFieldOfView 0.81
+  field SFInt32 cameraWidth 160
+  field SFInt32 cameraHeight 120
+  field SFVec2f cameraWindowPosition 0 0
+  field SFFloat cameraPixelSize 1.0
+  field SFBool waistBand FALSE
+  field SFColor waistBandColor 0 0 1
+  field SFInt32 channel 0
+  field SFString contactMaterial "default"
+  field SFString footContactMaterial "default"
+  field SFString fingerContactMaterial "default"
+  field SFFloat fingerRadius 0.0055
+  field SFFloat fingerTorque 10.0
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    synchronization IS synchronization
+    contactMaterial IS contactMaterial
+    name "NAO_H25_V40"
     children [
       DEF WAIST_BAND Transform {
         translation -0.003 0 -0.015
@@ -49,15 +48,15 @@ DEF Nao_Robot Robot {
             appearance Appearance {
               material Material {
                 ambientIntensity 0.4
-                diffuseColor 0 0 1
+                diffuseColor IS waistBandColor
               }
             }
             geometry Cylinder {
               height 0.042
               radius 0.054
-              bottom FALSE
-              side FALSE
-              top FALSE
+              bottom IS waistBand
+              side IS waistBand
+              top IS waistBand
               subdivision 18
             }
           }
@@ -779,7 +778,7 @@ DEF Nao_Robot Robot {
       DEF CHEST_SECONDARY_SKIN Shape {
         appearance DEF SECONDARY_SKIN_APP Appearance {
           material DEF SECONDARY_SKIN_MAT Material {
-            diffuseColor 0.94 0.41 0.01
+            diffuseColor IS color
             shininess 0.8
             specularColor 1 1 1
           }
@@ -834,7 +833,7 @@ DEF Nao_Robot Robot {
         appearance Appearance {
           material USE SECONDARY_SKIN_MAT
           texture ImageTexture {
-            url "../protos/textures/chest_button.png"
+            url "textures/chest_button.png"
           }
         }
         geometry IndexedFaceSet {
@@ -912,13 +911,13 @@ DEF Nao_Robot Robot {
         gradual TRUE
       }
       DEF GPS GPS {
-        resolution 0.0
+        resolution IS gpsResolution
       }
       DEF RECEIVER Receiver {
-        channel 0
+        channel IS channel
       }
       DEF EMITTER Emitter {
-        channel 0
+        channel IS channel
       }
       DEF SUPER_EMITTER Emitter {
         name "super_emitter"
@@ -1016,11 +1015,11 @@ DEF Nao_Robot Robot {
                     translation 0.0539 0 0
                     rotation 0.57735 -0.57735 -0.57735 2.0944
                     name "camera"
-                    windowPosition 0 0
-                    pixelSize 1.0
-                    fieldOfView 0.81
-                    width 160
-                    height 120
+                    windowPosition IS cameraWindowPosition
+                    pixelSize IS cameraPixelSize
+                    fieldOfView IS cameraFieldOfView
+                    width IS cameraWidth
+                    height IS cameraHeight
                     near 0.002
                   }
                 ]
@@ -1754,7 +1753,7 @@ DEF Nao_Robot Robot {
                   }
                   texture ImageTexture {
                     url [
-                      "../protos/textures/ear.png"
+                      "textures/ear.png"
                     ]
                   }
                 }
@@ -2079,7 +2078,7 @@ DEF Nao_Robot Robot {
               }
             ]
             name "HeadPitch"
-            contactMaterial "default"
+            contactMaterial IS contactMaterial
             boundingObject Transform {
               translation 0 0 0.055
               children [
@@ -2101,7 +2100,7 @@ DEF Nao_Robot Robot {
           }
         ]
         name "HeadYaw"
-        contactMaterial "default"
+        contactMaterial IS contactMaterial
         boundingObject Sphere {
           radius 0.01
         }
@@ -2754,7 +2753,7 @@ DEF Nao_Robot Robot {
                                     appearance USE MAIN_SKIN_APP
                                     geometry DEF PHALAX_CAP Capsule {
                                       height 0.01
-                                      radius 0.0055
+                                      radius IS fingerRadius
                                       subdivision 10
                                     }
                                   }
@@ -2772,28 +2771,28 @@ DEF Nao_Robot Robot {
                                       USE PHALANX_TRANS
                                     ]
                                     name "RPhalanx3"
-                                    contactMaterial "default"
+                                    contactMaterial IS fingerContactMaterial
                                     boundingObject USE PHALANX_TRANS
                                     physics DEF FINGER_PHYSICS Physics {
                                       density 200
                                     }
-                                    maxForce 10.0
+                                    maxForce IS fingerTorque
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "RPhalanx2"
-                                contactMaterial "default"
+                                contactMaterial IS fingerContactMaterial
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx1"
-                            contactMaterial "default"
+                            contactMaterial IS fingerContactMaterial
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           DEF RPhalanx4 Servo {
@@ -2813,26 +2812,26 @@ DEF Nao_Robot Robot {
                                       USE PHALANX_TRANS
                                     ]
                                     name "RPhalanx6"
-                                    contactMaterial "default"                                    
+                                    contactMaterial IS fingerContactMaterial                                    
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce 10.0
+                                    maxForce IS fingerTorque
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "RPhalanx5"
-                                contactMaterial "default"                                
+                                contactMaterial IS fingerContactMaterial                                
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx4"
-                            contactMaterial "default"                            
+                            contactMaterial IS fingerContactMaterial                            
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           DEF RPhalanx7 Servo {
@@ -2846,18 +2845,18 @@ DEF Nao_Robot Robot {
                                   USE PHALANX_TRANS
                                 ]
                                 name "RPhalanx8"
-                                contactMaterial "default"                                
+                                contactMaterial IS fingerContactMaterial                                
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx7"
-                            contactMaterial "default"                            
+                            contactMaterial IS fingerContactMaterial                            
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           DEF MAIN_HAND_SHAPE Shape {
@@ -3399,7 +3398,7 @@ DEF Nao_Robot Robot {
                           }
                         ]
                         name "RWristYaw"
-                        contactMaterial "default"
+                        contactMaterial IS contactMaterial
                         boundingObject DEF HAND_BO Group {
                           children [
                             Transform {
@@ -3642,7 +3641,7 @@ DEF Nao_Robot Robot {
                       }
                     ]
                     name "RElbowRoll"
-                    contactMaterial "default"
+                    contactMaterial IS contactMaterial
                     boundingObject Transform {
                       translation 0.03 -0.003 0.005
                       rotation 0 0 1 1.7
@@ -3664,7 +3663,7 @@ DEF Nao_Robot Robot {
                   }
                 ]
                 name "RElbowYaw"
-                contactMaterial "default"
+                contactMaterial IS contactMaterial
                 boundingObject DEF ELBOW_BO Sphere {
                   radius 0.02
                 }
@@ -3680,7 +3679,7 @@ DEF Nao_Robot Robot {
               }
             ]
             name "RShoulderRoll"
-            contactMaterial "default"
+            contactMaterial IS contactMaterial
             boundingObject Transform {
               translation 0.029 -0.005 0
               rotation 0 0 1 1.45
@@ -3704,7 +3703,7 @@ DEF Nao_Robot Robot {
           }
         ]
         name "RShoulderPitch"
-        contactMaterial "default"
+        contactMaterial IS contactMaterial
         boundingObject Sphere {
           radius 0.01
         }
@@ -4359,26 +4358,26 @@ DEF Nao_Robot Robot {
                                       USE PHALANX_TRANS
                                     ]
                                     name "LPhalanx3"
-                                    contactMaterial "default"
+                                    contactMaterial IS fingerContactMaterial
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce 10.0
+                                    maxForce IS fingerTorque
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "LPhalanx2"
-                                contactMaterial "default"
+                                contactMaterial IS fingerContactMaterial
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx1"
-                            contactMaterial "default"
+                            contactMaterial IS fingerContactMaterial
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           DEF LPhalanx4 Servo {
@@ -4398,26 +4397,26 @@ DEF Nao_Robot Robot {
                                       USE PHALANX_TRANS
                                     ]
                                     name "LPhalanx6"
-                                    contactMaterial "default"
+                                    contactMaterial IS fingerContactMaterial
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce 10.0
+                                    maxForce IS fingerTorque
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "LPhalanx5"
-                                contactMaterial "default"
+                                contactMaterial IS fingerContactMaterial
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx4"
-                            contactMaterial "default"
+                            contactMaterial IS fingerContactMaterial
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           DEF LPhalanx7 Servo {
@@ -4431,18 +4430,18 @@ DEF Nao_Robot Robot {
                                   USE PHALANX_TRANS
                                 ]
                                 name "LPhalanx8"
-                                contactMaterial "default"
+                                contactMaterial IS fingerContactMaterial
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce 10.0
+                                maxForce IS fingerTorque
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx7"
-                            contactMaterial "default"
+                            contactMaterial IS fingerContactMaterial
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce 10.0
+                            maxForce IS fingerTorque
                             maxPosition 0.96
                           }
                           USE MAIN_HAND_SHAPE
@@ -4450,7 +4449,7 @@ DEF Nao_Robot Robot {
                           USE STRUCTURE_HAND_SHAPE
                         ]
                         name "LWristYaw"
-                        contactMaterial "default"
+                        contactMaterial IS contactMaterial
                         boundingObject USE HAND_BO
                         physics Physics {
                           density -1
@@ -4657,7 +4656,7 @@ DEF Nao_Robot Robot {
                       }
                     ]
                     name "LElbowRoll"
-                    contactMaterial "default"
+                    contactMaterial IS contactMaterial
                     boundingObject Transform {
                       translation 0.03 0.003 0.005
                       rotation 0 0 1 -1.7
@@ -4676,7 +4675,7 @@ DEF Nao_Robot Robot {
                   }
                 ]
                 name "LElbowYaw"
-                contactMaterial "default"
+                contactMaterial IS contactMaterial
                 boundingObject USE ELBOW_BO
                 physics Physics {
                   density -1
@@ -4690,7 +4689,7 @@ DEF Nao_Robot Robot {
               }
             ]
             name "LShoulderRoll"
-            contactMaterial "default"
+            contactMaterial IS contactMaterial
             boundingObject Transform {
               translation 0.029 0.005 0
               rotation 0 0 1 -1.45
@@ -4710,7 +4709,7 @@ DEF Nao_Robot Robot {
           }
         ]
         name "LShoulderPitch"
-        contactMaterial "default"
+        contactMaterial IS contactMaterial
         boundingObject Sphere {
           radius 0.01
         }
@@ -6292,7 +6291,7 @@ DEF Nao_Robot Robot {
                                 translation 0.07025 0.0231 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrFL"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject DEF FSR_BO Capsule {
                                   height 0.025
                                   radius 0.004
@@ -6311,7 +6310,7 @@ DEF Nao_Robot Robot {
                                 translation 0.07025 -0.029 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrFR"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6324,7 +6323,7 @@ DEF Nao_Robot Robot {
                                 translation -0.02965 -0.035 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrRR"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6337,7 +6336,7 @@ DEF Nao_Robot Robot {
                                 translation -0.03025 0.0191 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrRL"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6730,7 +6729,7 @@ DEF Nao_Robot Robot {
                               }
                             ]
                             name "RAnkleRoll"
-                            contactMaterial "Nao_Robot"
+                            contactMaterial IS footContactMaterial
                             boundingObject Transform {
                               translation 0.02 -0.007 -0.03
                               children [
@@ -6751,7 +6750,7 @@ DEF Nao_Robot Robot {
                           }
                         ]
                         name "RAnklePitch"
-                        contactMaterial "default"
+                        contactMaterial IS contactMaterial
                         boundingObject DEF ANKLE_PITCH_BO Box {
                           size 0.078 0.027 0.05
                         }
@@ -6767,7 +6766,7 @@ DEF Nao_Robot Robot {
                       }
                     ]
                     name "RKneePitch"
-                    contactMaterial "default"
+                    contactMaterial IS contactMaterial
                     boundingObject DEF TIBIA_BO Transform {
                       translation 0.01 0 -0.055
                       rotation 0 1 0 0.2
@@ -6789,7 +6788,7 @@ DEF Nao_Robot Robot {
                   }
                 ]
                 name "RHipPitch"
-                contactMaterial "default"
+                contactMaterial IS contactMaterial
                 boundingObject DEF FEMUR_BO Transform {
                   translation 0 0 -0.055
                   rotation 0 1 0 5.9
@@ -6811,7 +6810,7 @@ DEF Nao_Robot Robot {
               }
             ]
             name "RHipRoll"
-            contactMaterial "default"
+            contactMaterial IS contactMaterial
             boundingObject DEF HIP_ROLL_BO Transform {
               translation -0.022 0 0
               children [
@@ -6832,7 +6831,7 @@ DEF Nao_Robot Robot {
           }
         ]
         name "RHipYawPitch"
-        contactMaterial "default"
+        contactMaterial IS contactMaterial
         boundingObject Sphere {
           radius 0.01
         }
@@ -8033,7 +8032,7 @@ DEF Nao_Robot Robot {
                                 translation 0.07025 0.029 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrFL"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8046,7 +8045,7 @@ DEF Nao_Robot Robot {
                                 translation 0.07025 -0.0231 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrFR"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8059,7 +8058,7 @@ DEF Nao_Robot Robot {
                                 translation -0.02965 -0.0191 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrRR"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8072,7 +8071,7 @@ DEF Nao_Robot Robot {
                                 translation -0.03025 0.035 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrRL"
-                                contactMaterial "Nao_Robot"
+                                contactMaterial IS footContactMaterial
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8463,7 +8462,7 @@ DEF Nao_Robot Robot {
                               }
                             ]
                             name "LAnkleRoll"
-                            contactMaterial "Nao_Robot"
+                            contactMaterial IS footContactMaterial
                             boundingObject Transform {
                               translation 0.02 0.007 -0.03
                               children [
@@ -8482,7 +8481,7 @@ DEF Nao_Robot Robot {
                           }
                         ]
                         name "LAnklePitch"
-                        contactMaterial "default"
+                        contactMaterial IS contactMaterial
                         boundingObject USE ANKLE_PITCH_BO
                         physics Physics {
                           density -1
@@ -8496,7 +8495,7 @@ DEF Nao_Robot Robot {
                       }
                     ]
                     name "LKneePitch"
-                    contactMaterial "default"
+                    contactMaterial IS contactMaterial
                     boundingObject USE TIBIA_BO
                     physics Physics {
                       density -1
@@ -8510,7 +8509,7 @@ DEF Nao_Robot Robot {
                   }
                 ]
                 name "LHipPitch"
-                contactMaterial "default"
+                contactMaterial IS contactMaterial
                 boundingObject USE FEMUR_BO
                 physics Physics {
                   density -1
@@ -8524,7 +8523,7 @@ DEF Nao_Robot Robot {
               }
             ]
             name "LHipRoll"
-            contactMaterial "default"
+            contactMaterial IS contactMaterial
             boundingObject USE HIP_ROLL_BO
             physics Physics {
               density -1
@@ -8538,7 +8537,7 @@ DEF Nao_Robot Robot {
           }
         ]
         name "LHipYawPitch"
-        contactMaterial "default"
+        contactMaterial IS contactMaterial
         boundingObject Sphere {
           radius 0.01
         }
@@ -8584,3 +8583,4 @@ DEF Nao_Robot Robot {
       centerOfMass -0.00413 9e-05 0.04342
     }
   }
+}
