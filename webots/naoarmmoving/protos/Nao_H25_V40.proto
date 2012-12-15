@@ -32,12 +32,12 @@ PROTO Nao_H25_V40 [
 ]
 {
   Robot {
-    translation IS translation
-    rotation IS rotation
-    controller IS controller
-    controllerArgs IS controllerArgs
-    synchronization IS synchronization
-    contactMaterial IS contactMaterial
+    translation 0 0.34 0.45
+    rotation 1 0 0 -1.5708
+    controller "naoqisim"
+    controllerArgs "9559"
+    synchronization FALSE
+    contactMaterial "default"
     name "NAO_H25_V40"
     children [
       DEF WAIST_BAND Transform {
@@ -48,15 +48,15 @@ PROTO Nao_H25_V40 [
             appearance Appearance {
               material Material {
                 ambientIntensity 0.4
-                diffuseColor IS waistBandColor
+                diffuseColor 0 0 1
               }
             }
             geometry Cylinder {
               height 0.042
               radius 0.054
-              bottom IS waistBand
-              side IS waistBand
-              top IS waistBand
+              bottom FALSE
+              side FALSE
+              top FALSE
               subdivision 18
             }
           }
@@ -778,7 +778,7 @@ PROTO Nao_H25_V40 [
       DEF CHEST_SECONDARY_SKIN Shape {
         appearance DEF SECONDARY_SKIN_APP Appearance {
           material DEF SECONDARY_SKIN_MAT Material {
-            diffuseColor IS color
+            diffuseColor 0.94 0.41 0.01
             shininess 0.8
             specularColor 1 1 1
           }
@@ -911,13 +911,13 @@ PROTO Nao_H25_V40 [
         gradual TRUE
       }
       DEF GPS GPS {
-        resolution IS gpsResolution
+        resolution 0.0
       }
       DEF RECEIVER Receiver {
-        channel IS channel
+        channel 0
       }
       DEF EMITTER Emitter {
-        channel IS channel
+        channel 0
       }
       DEF SUPER_EMITTER Emitter {
         name "super_emitter"
@@ -1015,11 +1015,11 @@ PROTO Nao_H25_V40 [
                     translation 0.0539 0 0
                     rotation 0.57735 -0.57735 -0.57735 2.0944
                     name "camera"
-                    windowPosition IS cameraWindowPosition
-                    pixelSize IS cameraPixelSize
-                    fieldOfView IS cameraFieldOfView
-                    width IS cameraWidth
-                    height IS cameraHeight
+                    windowPosition 0 0
+                    pixelSize 1.0
+                    fieldOfView 0.81
+                    width 160
+                    height 120
                     near 0.002
                   }
                 ]
@@ -2078,7 +2078,7 @@ PROTO Nao_H25_V40 [
               }
             ]
             name "HeadPitch"
-            contactMaterial IS contactMaterial
+            contactMaterial "
             boundingObject Transform {
               translation 0 0 0.055
               children [
@@ -2100,7 +2100,7 @@ PROTO Nao_H25_V40 [
           }
         ]
         name "HeadYaw"
-        contactMaterial IS contactMaterial
+        contactMaterial "default"
         boundingObject Sphere {
           radius 0.01
         }
@@ -2753,7 +2753,7 @@ PROTO Nao_H25_V40 [
                                     appearance USE MAIN_SKIN_APP
                                     geometry DEF PHALAX_CAP Capsule {
                                       height 0.01
-                                      radius IS fingerRadius
+                                      radius 0.0055
                                       subdivision 10
                                     }
                                   }
@@ -2771,28 +2771,28 @@ PROTO Nao_H25_V40 [
                                       USE PHALANX_TRANS
                                     ]
                                     name "RPhalanx3"
-                                    contactMaterial IS fingerContactMaterial
+                                    contactMaterial "default"
                                     boundingObject USE PHALANX_TRANS
                                     physics DEF FINGER_PHYSICS Physics {
                                       density 200
                                     }
-                                    maxForce IS fingerTorque
+                                    maxForce 10.0
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "RPhalanx2"
-                                contactMaterial IS fingerContactMaterial
+                                contactMaterial "default"
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx1"
-                            contactMaterial IS fingerContactMaterial
+                            contactMaterial "default"
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           DEF RPhalanx4 Servo {
@@ -2812,26 +2812,26 @@ PROTO Nao_H25_V40 [
                                       USE PHALANX_TRANS
                                     ]
                                     name "RPhalanx6"
-                                    contactMaterial IS fingerContactMaterial                                    
+                                    contactMaterial "default"                                    
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce IS fingerTorque
+                                    maxForce 10.0
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "RPhalanx5"
-                                contactMaterial IS fingerContactMaterial                                
+                                contactMaterial "default"                                
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx4"
-                            contactMaterial IS fingerContactMaterial                            
+                            contactMaterial "default"                            
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           DEF RPhalanx7 Servo {
@@ -2845,18 +2845,18 @@ PROTO Nao_H25_V40 [
                                   USE PHALANX_TRANS
                                 ]
                                 name "RPhalanx8"
-                                contactMaterial IS fingerContactMaterial                                
+                                contactMaterial "default"                                
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "RPhalanx7"
-                            contactMaterial IS fingerContactMaterial                            
+                            contactMaterial "default"                            
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           DEF MAIN_HAND_SHAPE Shape {
@@ -3398,7 +3398,7 @@ PROTO Nao_H25_V40 [
                           }
                         ]
                         name "RWristYaw"
-                        contactMaterial IS contactMaterial
+                        contactMaterial "default"
                         boundingObject DEF HAND_BO Group {
                           children [
                             Transform {
@@ -3641,7 +3641,7 @@ PROTO Nao_H25_V40 [
                       }
                     ]
                     name "RElbowRoll"
-                    contactMaterial IS contactMaterial
+                    contactMaterial "default"
                     boundingObject Transform {
                       translation 0.03 -0.003 0.005
                       rotation 0 0 1 1.7
@@ -3663,7 +3663,7 @@ PROTO Nao_H25_V40 [
                   }
                 ]
                 name "RElbowYaw"
-                contactMaterial IS contactMaterial
+                contactMaterial "default"
                 boundingObject DEF ELBOW_BO Sphere {
                   radius 0.02
                 }
@@ -3679,7 +3679,7 @@ PROTO Nao_H25_V40 [
               }
             ]
             name "RShoulderRoll"
-            contactMaterial IS contactMaterial
+            contactMaterial "default"
             boundingObject Transform {
               translation 0.029 -0.005 0
               rotation 0 0 1 1.45
@@ -3697,12 +3697,13 @@ PROTO Nao_H25_V40 [
             }
             maxVelocity 7.19407
             maxForce 5
+			position -0.06
             minPosition -1.32645
             maxPosition 0.314159
           }
         ]
         name "RShoulderPitch"
-        contactMaterial IS contactMaterial
+        contactMaterial "default"
         boundingObject Sphere {
           radius 0.01
         }
@@ -3713,6 +3714,7 @@ PROTO Nao_H25_V40 [
         }
         maxVelocity 8.26797
         maxForce 4
+		position 0.78
         minPosition -2.08567
         maxPosition 2.08567
       }
@@ -4356,26 +4358,26 @@ PROTO Nao_H25_V40 [
                                       USE PHALANX_TRANS
                                     ]
                                     name "LPhalanx3"
-                                    contactMaterial IS fingerContactMaterial
+                                    contactMaterial "default"
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce IS fingerTorque
+                                    maxForce 10.0
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "LPhalanx2"
-                                contactMaterial IS fingerContactMaterial
+                                contactMaterial "default"
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx1"
-                            contactMaterial IS fingerContactMaterial
+                            contactMaterial "default"
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           DEF LPhalanx4 Servo {
@@ -4395,26 +4397,26 @@ PROTO Nao_H25_V40 [
                                       USE PHALANX_TRANS
                                     ]
                                     name "LPhalanx6"
-                                    contactMaterial IS fingerContactMaterial
+                                    contactMaterial "default"
                                     boundingObject USE PHALANX_TRANS
                                     physics USE FINGER_PHYSICS
-                                    maxForce IS fingerTorque
+                                    maxForce 10.0
                                     maxPosition 0.96
                                   }
                                 ]
                                 name "LPhalanx5"
-                                contactMaterial IS fingerContactMaterial
+                                contactMaterial "default"
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx4"
-                            contactMaterial IS fingerContactMaterial
+                            contactMaterial "default"
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           DEF LPhalanx7 Servo {
@@ -4428,18 +4430,18 @@ PROTO Nao_H25_V40 [
                                   USE PHALANX_TRANS
                                 ]
                                 name "LPhalanx8"
-                                contactMaterial IS fingerContactMaterial
+                                contactMaterial "default"
                                 boundingObject USE PHALANX_TRANS
                                 physics USE FINGER_PHYSICS
-                                maxForce IS fingerTorque
+                                maxForce 10.0
                                 maxPosition 0.96
                               }
                             ]
                             name "LPhalanx7"
-                            contactMaterial IS fingerContactMaterial
+                            contactMaterial "default"
                             boundingObject USE PHALANX_TRANS
                             physics USE FINGER_PHYSICS
-                            maxForce IS fingerTorque
+                            maxForce 10.0
                             maxPosition 0.96
                           }
                           USE MAIN_HAND_SHAPE
@@ -4447,7 +4449,7 @@ PROTO Nao_H25_V40 [
                           USE STRUCTURE_HAND_SHAPE
                         ]
                         name "LWristYaw"
-                        contactMaterial IS contactMaterial
+                        contactMaterial "default"
                         boundingObject USE HAND_BO
                         physics Physics {
                           density -1
@@ -4654,7 +4656,7 @@ PROTO Nao_H25_V40 [
                       }
                     ]
                     name "LElbowRoll"
-                    contactMaterial IS contactMaterial
+                    contactMaterial "default"
                     boundingObject Transform {
                       translation 0.03 0.003 0.005
                       rotation 0 0 1 -1.7
@@ -4673,7 +4675,7 @@ PROTO Nao_H25_V40 [
                   }
                 ]
                 name "LElbowYaw"
-                contactMaterial IS contactMaterial
+                contactMaterial "default"
                 boundingObject USE ELBOW_BO
                 physics Physics {
                   density -1
@@ -4687,7 +4689,7 @@ PROTO Nao_H25_V40 [
               }
             ]
             name "LShoulderRoll"
-            contactMaterial IS contactMaterial
+            contactMaterial "default"
             boundingObject Transform {
               translation 0.029 0.005 0
               rotation 0 0 1 -1.45
@@ -4707,7 +4709,7 @@ PROTO Nao_H25_V40 [
           }
         ]
         name "LShoulderPitch"
-        contactMaterial IS contactMaterial
+        contactMaterial "default"
         boundingObject Sphere {
           radius 0.01
         }
@@ -6289,7 +6291,7 @@ PROTO Nao_H25_V40 [
                                 translation 0.07025 0.0231 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrFL"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject DEF FSR_BO Capsule {
                                   height 0.025
                                   radius 0.004
@@ -6308,7 +6310,7 @@ PROTO Nao_H25_V40 [
                                 translation 0.07025 -0.029 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrFR"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6321,7 +6323,7 @@ PROTO Nao_H25_V40 [
                                 translation -0.02965 -0.035 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrRR"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6334,7 +6336,7 @@ PROTO Nao_H25_V40 [
                                 translation -0.03025 0.0191 -0.042
                                 rotation 0 1 0 3.1416
                                 name "RFsrRL"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -6727,7 +6729,7 @@ PROTO Nao_H25_V40 [
                               }
                             ]
                             name "RAnkleRoll"
-                            contactMaterial IS footContactMaterial
+                            contactMaterial "Nao_Robot"
                             boundingObject Transform {
                               translation 0.02 -0.007 -0.03
                               children [
@@ -6748,7 +6750,7 @@ PROTO Nao_H25_V40 [
                           }
                         ]
                         name "RAnklePitch"
-                        contactMaterial IS contactMaterial
+                        contactMaterial "default"
                         boundingObject DEF ANKLE_PITCH_BO Box {
                           size 0.078 0.027 0.05
                         }
@@ -6764,7 +6766,7 @@ PROTO Nao_H25_V40 [
                       }
                     ]
                     name "RKneePitch"
-                    contactMaterial IS contactMaterial
+                    contactMaterial "default"
                     boundingObject DEF TIBIA_BO Transform {
                       translation 0.01 0 -0.055
                       rotation 0 1 0 0.2
@@ -6786,7 +6788,7 @@ PROTO Nao_H25_V40 [
                   }
                 ]
                 name "RHipPitch"
-                contactMaterial IS contactMaterial
+                contactMaterial "default"
                 boundingObject DEF FEMUR_BO Transform {
                   translation 0 0 -0.055
                   rotation 0 1 0 5.9
@@ -6808,7 +6810,7 @@ PROTO Nao_H25_V40 [
               }
             ]
             name "RHipRoll"
-            contactMaterial IS contactMaterial
+            contactMaterial "default"
             boundingObject DEF HIP_ROLL_BO Transform {
               translation -0.022 0 0
               children [
@@ -6829,7 +6831,7 @@ PROTO Nao_H25_V40 [
           }
         ]
         name "RHipYawPitch"
-        contactMaterial IS contactMaterial
+        contactMaterial "default"
         boundingObject Sphere {
           radius 0.01
         }
@@ -8030,7 +8032,7 @@ PROTO Nao_H25_V40 [
                                 translation 0.07025 0.029 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrFL"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8043,7 +8045,7 @@ PROTO Nao_H25_V40 [
                                 translation 0.07025 -0.0231 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrFR"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8056,7 +8058,7 @@ PROTO Nao_H25_V40 [
                                 translation -0.02965 -0.0191 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrRR"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8069,7 +8071,7 @@ PROTO Nao_H25_V40 [
                                 translation -0.03025 0.035 -0.042
                                 rotation 0 1 0 3.1416
                                 name "LFsrRL"
-                                contactMaterial IS footContactMaterial
+                                contactMaterial "Nao_Robot"
                                 boundingObject USE FSR_BO
                                 physics USE FSR_PHYSICS
                                 type "force"
@@ -8460,7 +8462,7 @@ PROTO Nao_H25_V40 [
                               }
                             ]
                             name "LAnkleRoll"
-                            contactMaterial IS footContactMaterial
+                            contactMaterial "Nao_Robot"
                             boundingObject Transform {
                               translation 0.02 0.007 -0.03
                               children [
@@ -8479,7 +8481,7 @@ PROTO Nao_H25_V40 [
                           }
                         ]
                         name "LAnklePitch"
-                        contactMaterial IS contactMaterial
+                        contactMaterial "default"
                         boundingObject USE ANKLE_PITCH_BO
                         physics Physics {
                           density -1
@@ -8493,7 +8495,7 @@ PROTO Nao_H25_V40 [
                       }
                     ]
                     name "LKneePitch"
-                    contactMaterial IS contactMaterial
+                    contactMaterial "default"
                     boundingObject USE TIBIA_BO
                     physics Physics {
                       density -1
@@ -8507,7 +8509,7 @@ PROTO Nao_H25_V40 [
                   }
                 ]
                 name "LHipPitch"
-                contactMaterial IS contactMaterial
+                contactMaterial "default"
                 boundingObject USE FEMUR_BO
                 physics Physics {
                   density -1
@@ -8521,7 +8523,7 @@ PROTO Nao_H25_V40 [
               }
             ]
             name "LHipRoll"
-            contactMaterial IS contactMaterial
+            contactMaterial "default"
             boundingObject USE HIP_ROLL_BO
             physics Physics {
               density -1
@@ -8535,7 +8537,7 @@ PROTO Nao_H25_V40 [
           }
         ]
         name "LHipYawPitch"
-        contactMaterial IS contactMaterial
+        contactMaterial "default"
         boundingObject Sphere {
           radius 0.01
         }

@@ -7,19 +7,22 @@
 import com.cyberbotics.webots.controller.Supervisor;
 import com.cyberbotics.webots.controller.Node;
 import com.cyberbotics.webots.controller.Field;
-import com.cyberbotics.webots.controller.Accelerometer;
 
 public class NaoArmMovingSupervisor extends Supervisor
 {
   public static final int STEP_TIME = 64;
   public static final int MILLISECONDS_IN_SECOND = 1000;
-  public static final double QUIT_TIME = 2.0;
+  public static final double QUIT_TIME = 3000.0;
   
-  public static final String ROBOT_NAME = "Nao_Robot";
-  private Node robot;
-  private Field robotTranslation;
-  
-  private double[] positionInitial;
+  // Displaying debug info.
+  public static final boolean DEBUG = true;
+  public static final int DEBUG_UID = 0;
+  public static final double DEBUG_X = 0.02;
+  public static final double DEBUG_Y = 0.02;
+  public static final double DEBUG_FONT_SIZE = 0.12;
+  public static final int DEBUG_FONT_COLOR = 0x000000;
+  public static final double DEBUG_FONT_TRANSPARANCY = 0.0;
+
   private double timeElapsed;  
   
   /**
@@ -31,12 +34,23 @@ public class NaoArmMovingSupervisor extends Supervisor
   }
   public void run()
   {
-    // Initialize position.
     this.timeElapsed = 0.0;
+    
+    Node RWristYaw = this.getFromDef( "RWristYaw" );
   
     // Main loop.
     do
     {
+      double position[] = RWristYaw.getPosition();
+      double orientation[] = RWristYaw.getOrientation();
+      
+      // Create debug message.
+      String message = String.format( "RWristYaw: %.03f\t%.03f\t%.03f",
+                                      position[ 0 ],
+                                      position[ 1 ],
+                                      position[ 2 ] );
+      this.showDebugLabel( message );
+    
       if( this.timeElapsed > NaoArmMovingSupervisor.QUIT_TIME )
       {
         // Revert simulation.
@@ -49,6 +63,21 @@ public class NaoArmMovingSupervisor extends Supervisor
     while( this.step( NaoArmMovingSupervisor.STEP_TIME ) != -1 );
     
     // Enter here exit cleanup code
+  }
+  
+  /**
+   * Shows a debug label.
+   * @param message
+   */
+  private void showDebugLabel( String message )
+  {
+      this.setLabel( NaoArmMovingSupervisor.DEBUG_UID,
+                    message,
+                    NaoArmMovingSupervisor.DEBUG_X,
+                    NaoArmMovingSupervisor.DEBUG_Y,
+                    NaoArmMovingSupervisor.DEBUG_FONT_SIZE,
+                    NaoArmMovingSupervisor.DEBUG_FONT_COLOR,
+                    NaoArmMovingSupervisor.DEBUG_FONT_TRANSPARANCY );
   }
 
   /**
