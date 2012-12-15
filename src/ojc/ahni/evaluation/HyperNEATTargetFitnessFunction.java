@@ -114,6 +114,19 @@ public class HyperNEATTargetFitnessFunction extends HyperNEATFitnessFunction imp
 	}
 	
 	protected int evaluate(Chromosome genotype, Activator substrate, int evalThreadIndex, NiceWriter logOutput) {
+		//System.out.println("HyperNeatTargetFitnessFunction.evaluate: Evaluating this!");
+		double[][][] responses1D = substrate.nextSequence(inputPatterns);
+		/*
+		for(int t = 0 ; t < responses1D.length;t++){
+			System.out.println("Response:");
+			for(int x = 0; x < responses1D[t].length;x++){
+				for(int y = 0 ; y < responses1D[t][x].length;y++){
+					System.out.print(responses1D[t][x][y] + "[" + inputPatterns[t][x][y]+"] ");
+				}
+				System.out.println("");
+			}
+		}*/
+		
 		TargetFitnessCalculator.Results results = fitnessCalculator.evaluate(substrate, inputPatterns, targetOutputPatterns, minTargetOutputValue, maxTargetOutputValue, logOutput);
 		genotype.setPerformanceValue(results.performance);
 		return results.fitness;

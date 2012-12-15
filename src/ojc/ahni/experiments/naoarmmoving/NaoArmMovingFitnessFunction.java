@@ -40,11 +40,12 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 	protected int evaluate( Chromosome genotype, Activator substrate, int evalThreadIndex )
 	{
 		GridNet net = (GridNet) substrate ;
-		
+		//MotionParser.writeRaisingHandFile(null, String.format( "raisingthathand.motion"));
 		int width = 12 ; 
 		int height = 1; 
 		double[][] stimuli = new double[height][width];
 		double[][] targets = MotionParser.loadMotionFile(String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "Forwards.motion" ) );
+		
 		/*
 		System.out.println("Targets:");
 		for (double[] dd: targets){
@@ -59,7 +60,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 		System.out.println(targets.length + "  "  + targets[0].length);
 		for(int x = 0 ; x < height; x++){
 			for(int y = 0; y < width; y++){
-				stimuli[x][y] = y;
+				stimuli[x][y] = targets[x][y];
 			}
 		}
 		double[][] gridnetActivation = net.nextSequence(stimuli);
@@ -72,7 +73,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 			int ycor = 0 ;
 			for(double d: dd){
 				totalfitness += Math.abs(targets[xcor][ycor]-gridnetActivation[xcor][ycor]);
-				System.out.print(gridnetActivation[xcor][ycor] + "  ");
+				System.out.print(gridnetActivation[xcor][ycor] + "[" + targets[xcor][ycor] + "] ");
 				//totalfitness += d;
 				ycor++;
 			}

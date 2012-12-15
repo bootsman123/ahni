@@ -80,5 +80,57 @@ public class MotionParser {
 			e.printStackTrace();
 		} 
 	}
+	
+	public static void writeRaisingHandFile(double[][] motionFile, String fileName){
+		int widthFile = 1 ;
+		int heightFile = 180; 
+		motionFile = new double[heightFile][widthFile];
+		double minval =  0.78;
+		double maxval = -1.78;
+		double step = (Math.abs(minval)+Math.abs(maxval))/heightFile ;
+		System.out.println("step: " + step + "  minval " + minval);
+		for(int x = 0 ; x < heightFile; x++){
+			for(int y = 0 ; y < widthFile; y++){
+				motionFile[x][y] = minval - (x*step);
+			}
+		}
+		FileWriter fos;
+		try {
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+			decimalFormatSymbols.setDecimalSeparator( '.' );
+			
+			// Create new file writer.
+			File file = new File( "data/generations" + File.separator+ fileName);			
+			fos = new FileWriter(file, false);
+			BufferedWriter out = new BufferedWriter(fos); 
+			
+			out.write("#WEBOTS_MOTION,V1.0,RShoulderPitch\n") ;
+			int timestep = 40 ; 
+			System.out.println("length: " + motionFile.length);
+			for (int x = 0 ; x < motionFile.length; x++){
+				
+				if ((x*timestep)%1000 < 100 ){
+					out.write("00:0" + (int)((x*timestep)/1000) + ":0" + (x*timestep)%1000 + ",Pose" + (x+1)) ; 
+				}
+				else{
+					out.write("00:0" + (int)((x*timestep)/1000) + ":" + (x*timestep)%1000 + ",Pose" + (x+1)) ;
+				}
+				
+				
+				for(int y = 0; y < motionFile[x].length; y++)
+				{
+					out.write("," + new DecimalFormat("#.###", decimalFormatSymbols ).format(((motionFile[x][y])))) ;
+				}
+				out.write("\n") ; 
+			}
+			out.close(); 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
 }
 
