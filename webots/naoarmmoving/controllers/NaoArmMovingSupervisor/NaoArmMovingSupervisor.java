@@ -23,7 +23,8 @@ public class NaoArmMovingSupervisor extends Supervisor
   public static final int DEBUG_FONT_COLOR = 0x000000;
   public static final double DEBUG_FONT_TRANSPARANCY = 0.0;
 
-  private double timeElapsed;  
+  private double timeElapsed;
+  
   
   /**
    * Constructor.
@@ -37,18 +38,19 @@ public class NaoArmMovingSupervisor extends Supervisor
     this.timeElapsed = 0.0;
     
     Node RWristYaw = this.getFromDef( "RWristYaw" );
+    double[] originalPosition = RWristYaw.getPosition();
   
     // Main loop.
     do
     {
       double position[] = RWristYaw.getPosition();
-      double orientation[] = RWristYaw.getOrientation();
       
       // Create debug message.
-      String message = String.format( "RWristYaw: %.03f\t%.03f\t%.03f",
+      String message = String.format( "RWristYaw: %.03f\t%.03f\t%.03f\nDistance: %.03f",
                                       position[ 0 ],
                                       position[ 1 ],
-                                      position[ 2 ] );
+                                      position[ 2 ],
+                                      position[ 1 ] - originalPosition[ 1 ] );
       this.showDebugLabel( message );
     
       if( this.timeElapsed > NaoArmMovingSupervisor.QUIT_TIME )

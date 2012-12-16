@@ -13,8 +13,13 @@ import com.anji.integration.Activator;
 
 public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 {
+	/**
+	 * Serial Version UID.
+	 */
+	private static final long serialVersionUID = -4527350411511555637L;
+	
 	public static final String WEBOTS_DIRECTORY = String.format( "%s%s%s%s", System.getProperty( "user.dir" ), File.separator, "webots", File.separator );
-	public static final String WEBOTS_EXECUTABLE = "C:/Programs/Webots/webots.exe";
+	public static final String WEBOTS_EXECUTABLE = "C:/Program Files (x86)/Webots/webots.exe";
 	
 	public static final String DATA_DIRECTORY = String.format( "%s%s%s%s", System.getProperty( "user.dir" ), File.separator, "data", File.separator );
 	public static final String DATA_FILE_NAME_ACCELEROMETER = "accelerometer.csv";
@@ -39,6 +44,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 	@Override
 	protected int evaluate( Chromosome genotype, Activator substrate, int evalThreadIndex )
 	{
+		/*
 		GridNet net = (GridNet) substrate ;
 		//MotionParser.writeRaisingHandFile(null, String.format( "raisingthathand.motion"));
 		int width = 12 ; 
@@ -55,7 +61,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 				
 			}
 			System.out.println();
-		}*/
+		}*
 	
 		System.out.println(targets.length + "  "  + targets[0].length);
 		for(int x = 0 ; x < height; x++){
@@ -81,12 +87,15 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 			System.out.println();
 		}
 		//}
+		*/
 		
-		/*
-		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ForwardsEvolved.motion" ) );
-		double[][] activation = substrate.nextSequence( stimuli );
 
-		MotionParser.writeMotionFile( activation, "ForwardsEvolved.motion" );
+		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ArmMoving.motion" ) );
+		double[][] activation = substrate.nextSequence( stimuli );
+		
+		System.out.println( stimuli[ 0 ][ 0 ] );
+
+		MotionParser.writeMotionFile( activation, "ArmMoving.motion" );
 
 		// Run Webots.
 		Runtime runtime = Runtime.getRuntime() ;
@@ -96,11 +105,9 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 			// Run simulation
 			System.out.printf( "[Webots]: Running simuation...\n" );
 						
-			Process process = runtime.exec( String.format( "%s --mode=run \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoiceskating/worlds/naoiceskating.wbt" ) );
+			Process process = runtime.exec( String.format( "%s --mode=run \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoarmmoving/worlds/naoarmmoving.wbt" ) );
 			int code = process.waitFor();
-			
-			//System.out.printf( "[Webots]: Simulation ended with code %n.\n", code );
-			
+						
 			// Determine fitness.			
 			Fitnessizer fitnessizer = new Fitnessizer( DATA_FILE_PATH_ORIGINAL_ACCELEROMETER );
 			double fitness = fitnessizer.calculate( String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ACCELEROMETER ) );
@@ -122,8 +129,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 		{
 			e.printStackTrace();
 		}
-		*/
-		return (int) totalfitness;
-//		return this.getMaxFitnessValue();
+		
+		return this.getMaxFitnessValue();
 	}
 }

@@ -9,8 +9,6 @@ DEF WorldInfo WorldInfo {
     ContactProperties {
       material1 "Ice_Skating_Rink"
       material2 "Nao_Robot"
-      coulombFriction 0.4
-      forceDependentSlip 0.25
     }
   ]
 }
@@ -3715,7 +3713,7 @@ DEF Nao_Robot Robot {
         }
         maxVelocity 8.26797
         maxForce 4
-		position 0.78
+		position 1.59
         minPosition -2.08567
         maxPosition 2.08567
       }

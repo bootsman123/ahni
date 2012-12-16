@@ -54,7 +54,7 @@ public class MotionParser {
 			fos = new FileWriter(file, false);
 			BufferedWriter out = new BufferedWriter(fos); 
 			
-			out.write("#WEBOTS_MOTION,V1.0,LHipYawPitch,LHipRoll,LHipPitch,LKneePitch,LAnklePitch,LAnkleRoll,RHipYawPitch,RHipRoll,RHipPitch,RKneePitch,RAnklePitch,RAnkleRoll\n") ;
+			out.write("#WEBOTS_MOTION,V1.0,RShoulderPitch\n") ;
 			int timestep = 40 ; 
 			for (int x = 0 ; x < motionFile.length; x++){
 				
@@ -81,6 +81,7 @@ public class MotionParser {
 		} 
 	}
 	
+	/*
 	public static void writeRaisingHandFile(double[][] motionFile, String fileName){
 		int widthFile = 1 ;
 		int heightFile = 180; 
@@ -132,5 +133,6 @@ public class MotionParser {
 			e.printStackTrace();
 		} 
 	}
+	*/
 }
 
