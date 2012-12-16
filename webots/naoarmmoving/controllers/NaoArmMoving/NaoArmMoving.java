@@ -38,7 +38,7 @@ public class NaoArmMoving extends Robot
       // Main loop.
       do
       {
-        //this.motion.play();
+        this.motion.play();
         
         timeElapsed += (double)NaoArmMoving.STEP_TIME / NaoArmMoving.MILLISECONDS_IN_SECOND;
       }

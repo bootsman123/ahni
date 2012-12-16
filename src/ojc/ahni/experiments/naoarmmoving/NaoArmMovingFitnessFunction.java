@@ -22,8 +22,8 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 	public static final String WEBOTS_EXECUTABLE = "C:/Program Files (x86)/Webots/webots.exe";
 	
 	public static final String DATA_DIRECTORY = String.format( "%s%s%s%s", System.getProperty( "user.dir" ), File.separator, "data", File.separator );
-	public static final String DATA_FILE_NAME_ACCELEROMETER = "accelerometer.csv";
-	public static final String DATA_FILE_NAME_ORIGINAL_ACCELEROMETER = "original_accelerometer.csv";
+	public static final String DATA_FILE_NAME_ACCELEROMETER = "armmovingheight.csv";
+	public static final String DATA_FILE_NAME_ORIGINAL_ACCELEROMETER = "original_armmovingheight.csv"; //@TODO: Unavailable right now.
 	public static final String DATA_FILE_PATH_ORIGINAL_ACCELEROMETER = String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ORIGINAL_ACCELEROMETER );
 	
 	private final String uid = ( UUID.randomUUID() ).toString();
@@ -92,22 +92,31 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 
 		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ArmMoving.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
-		
-		System.out.println( stimuli[ 0 ][ 0 ] );
 
 		MotionParser.writeMotionFile( activation, "ArmMoving.motion" );
 
 		// Run Webots.
-		Runtime runtime = Runtime.getRuntime() ;
+		Runtime runtime = Runtime.getRuntime();
 		
 		try
 		{
 			// Run simulation
 			System.out.printf( "[Webots]: Running simuation...\n" );
 						
-			Process process = runtime.exec( String.format( "%s --mode=run \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoarmmoving/worlds/naoarmmoving.wbt" ) );
-			int code = process.waitFor();
+			//Process process = runtime.exec( String.format( "cmd.exe /C %s --mode=fast \"%s%s\"", WEBOTS_EXECUTABLE, WEBOTS_DIRECTORY, "naoarmmoving/worlds/naoarmmoving.wbt" ) );
+			//int code = process.waitFor();
+			
+			String[] command = {
+				"cmd.exe",
+				"/C",
+				WEBOTS_EXECUTABLE,
+				"--mode=fast",
+				String.format( "%s%s", WEBOTS_DIRECTORY, "naoarmmoving\\worlds\\naoarmmoving.wbt" )
+			};
 						
+			Process process = runtime.exec( command );
+			int code = process.waitFor();
+
 			// Determine fitness.			
 			Fitnessizer fitnessizer = new Fitnessizer( DATA_FILE_PATH_ORIGINAL_ACCELEROMETER );
 			double fitness = fitnessizer.calculate( String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ACCELEROMETER ) );
