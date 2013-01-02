@@ -22,9 +22,9 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 	public static final String WEBOTS_EXECUTABLE = "C:/Program Files (x86)/Webots/webots.exe";
 	
 	public static final String DATA_DIRECTORY = String.format( "%s%s%s%s", System.getProperty( "user.dir" ), File.separator, "data", File.separator );
-	public static final String DATA_FILE_NAME_ACCELEROMETER = "armmovingheight.csv";
-	public static final String DATA_FILE_NAME_ORIGINAL_ACCELEROMETER = "original_armmovingheight.csv"; //@TODO: Unavailable right now.
-	public static final String DATA_FILE_PATH_ORIGINAL_ACCELEROMETER = String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ORIGINAL_ACCELEROMETER );
+	public static final String DATA_FILE_NAME = "armmovingheight.csv";
+	public static final String DATA_FILE_NAME_ORIGINAL = "original_armmovingheight.csv";
+	public static final String DATA_FILE_PATH_ORIGINAL = String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ORIGINAL );
 	
 	private final String uid = ( UUID.randomUUID() ).toString();
 	
@@ -90,7 +90,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 		*/
 		
 
-		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ArmMoving.motion" ) );
+		double[][] stimuli = MotionParser.loadMotionFile( String.format( "%s%s%s%s", DATA_DIRECTORY, "generations", File.separator, "ArmMovingStill.motion" ) );
 		double[][] activation = substrate.nextSequence( stimuli );
 
 		MotionParser.writeMotionFile( activation, "ArmMoving.motion" );
@@ -110,7 +110,7 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 				"cmd.exe",
 				"/C",
 				WEBOTS_EXECUTABLE,
-				"--mode=fast",
+				"--mode=run",
 				String.format( "%s%s", WEBOTS_DIRECTORY, "naoarmmoving\\worlds\\naoarmmoving.wbt" )
 			};
 						
@@ -118,8 +118,8 @@ public class NaoArmMovingFitnessFunction extends HyperNEATFitnessFunction
 			int code = process.waitFor();
 
 			// Determine fitness.			
-			Fitnessizer fitnessizer = new Fitnessizer( DATA_FILE_PATH_ORIGINAL_ACCELEROMETER );
-			double fitness = fitnessizer.calculate( String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME_ACCELEROMETER ) );
+			Fitnessizer fitnessizer = new Fitnessizer( DATA_FILE_PATH_ORIGINAL );
+			double fitness = fitnessizer.calculate( String.format( "%s%s", DATA_DIRECTORY, DATA_FILE_NAME ) );
 			
 			System.out.printf( "Fitness: %f\n", fitness );
 			

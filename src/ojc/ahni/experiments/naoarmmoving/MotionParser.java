@@ -82,12 +82,17 @@ public class MotionParser {
 	}
 	
 	/*
-	public static void writeRaisingHandFile(double[][] motionFile, String fileName){
+	public static void main( String[] args )
+	{
+		MotionParser.writeRaisingHandFile( "ArmMoving.motion" );
+	}
+	
+	public static void writeRaisingHandFile(String fileName){
 		int widthFile = 1 ;
-		int heightFile = 180; 
-		motionFile = new double[heightFile][widthFile];
-		double minval =  0.78;
-		double maxval = -1.78;
+		int heightFile = 51; 
+		double[][] motionFile = new double[heightFile][widthFile];
+		double minval =  1.59;
+		double maxval = -1.54;
 		double step = (Math.abs(minval)+Math.abs(maxval))/heightFile ;
 		System.out.println("step: " + step + "  minval " + minval);
 		for(int x = 0 ; x < heightFile; x++){
